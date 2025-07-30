@@ -1,22 +1,36 @@
+import { Submenu } from "@/components/home/submenu";
+import { GetDataHome, getSubMenu } from "@/utils/actions/get-data";
+import { HomeProps } from "@/utils/home.type";
+import { Hero } from '@/components/hero'
+import { Phone } from 'lucide-react'
+import { Services } from "@/components/home/services";
+import { Container } from "@/components/container";
+import { Footer } from '@/components/home/footer';
+import { MenuProps } from "@/utils/menu.type";
 
 
-export default function Home() {
+export default async function Home() {
+  const {object}: HomeProps = await GetDataHome();
+  const menu: MenuProps = await getSubMenu();
+
+ //console.log(menu);
   return (
       <main>
-        <div
-        style={{width: '100%', height: 600, backgroundColor: '#121212', marginBottom: 24}}>
-          <h1>TESTE</h1>
-        </div>
+       {menu.objects.length > 0 && <Submenu menu={menu}/>}
 
-        <div
-        style={{width: '100%', height: 600, backgroundColor: 'blue', marginBottom: 24}}>
-          <h1>TESTE</h1>
-        </div>
+       <Hero
+       heading={object.metadata.heading}
+       buttonTitle={object.metadata.cta_button.title}
+       buttonUrl={object.metadata.cta_button.url}
+       bannerUrl={object.metadata.banner.url}
+       icon={<Phone size={24} color="#FFF"/>}
+       />
 
-        <div
-        style={{width: '100%', height: 600, backgroundColor: 'green', marginBottom: 24}}>
-          <h1>TESTE</h1>
-        </div>
+       <Container>
+        <Services object={object}/>
+        <Footer object={object}/>
+       </Container>
+
       </main>
   );
 }
