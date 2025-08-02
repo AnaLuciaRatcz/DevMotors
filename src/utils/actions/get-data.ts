@@ -1,3 +1,5 @@
+import { redirect } from "next/navigation";
+
 export async function GetDataHome(){
     try{
         const url = (`${process.env.NEXT_PUBLIC_API_URL}
@@ -42,7 +44,7 @@ export async function getSubMenu(){
 
 
 export async function getItemBySlug(itemSlug: string){
-    const baseUrl = `${process.env.NEXT_PUBLIC_API_URL}/objects`
+    const baseUrl = `${process.env.NEXT_PUBLIC_API_URL}-c959ff70-687b-11f0-8787-bd4453357309/objects`
 
     //definindo o objeto de consulta pelo slug
     const queryParams = new URLSearchParams({
@@ -61,6 +63,6 @@ export async function getItemBySlug(itemSlug: string){
         }
         return res.json();
     }catch(err){
-       throw new Error("Failed get item by slug")  
+      redirect ("/")
     }
 }
